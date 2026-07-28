@@ -1,0 +1,42 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+dist/
+build/
+*.egg-info/
+
+# Node
+node_modules/
+.next/
+coverage/
+*.tsbuildinfo
+
+# Local data and generated artifacts
+.data/
+uploads/
+artifacts/private/
+*.db
+*.sqlite
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.auto.tfvars
+!*.example.tfvars
+crash*.log
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/
