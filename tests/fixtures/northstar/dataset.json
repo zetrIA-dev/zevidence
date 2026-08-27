@@ -1,0 +1,75 @@
+{
+  "dataset_version": "1.0.0",
+  "schema_version": "1.0.0",
+  "dossier": {
+    "title": "Northstar Systems vendor review",
+    "requirements": [
+      "The vendor holds a valid ISO 27001 certification.",
+      "Customer data and backups remain only in the European Union.",
+      "The platform supports SSO through SAML.",
+      "The recovery time objective is no more than four hours.",
+      "Customer data is deleted within 30 days after contract termination."
+    ]
+  },
+  "expected_claims": [
+    {
+      "text": "The vendor holds a valid ISO 27001 certification.",
+      "status": "supported",
+      "evidence": [
+        {
+          "document": "security-overview.md",
+          "section": "Certifications",
+          "excerpt": "ISO/IEC 27001 certificate NS-27001-2026 is valid through 31 December 2026."
+        }
+      ]
+    },
+    {
+      "text": "Customer data and backups remain only in the European Union.",
+      "status": "conflicting",
+      "evidence": [
+        {
+          "document": "vendor-proposal.md",
+          "section": "Data residency",
+          "excerpt": "Northstar Systems states that customer data is stored only in European Union regions."
+        },
+        {
+          "document": "continuity-and-data-policy.md",
+          "section": "Backup replication",
+          "excerpt": "Disaster-recovery backups may be replicated to the United States when European capacity is unavailable."
+        }
+      ]
+    },
+    {
+      "text": "The platform supports SSO through SAML.",
+      "status": "supported",
+      "evidence": [
+        {
+          "document": "security-overview.md",
+          "section": "Identity and access",
+          "excerpt": "The platform supports SAML 2.0 single sign-on for customer organizations."
+        }
+      ]
+    },
+    {
+      "text": "The recovery time objective is no more than four hours.",
+      "status": "conflicting",
+      "evidence": [
+        {
+          "document": "vendor-proposal.md",
+          "section": "Service continuity",
+          "excerpt": "Northstar Systems commits to a recovery time objective of four hours."
+        },
+        {
+          "document": "continuity-and-data-policy.md",
+          "section": "Recovery objectives",
+          "excerpt": "The standard recovery time objective is eight hours."
+        }
+      ]
+    },
+    {
+      "text": "Customer data is deleted within 30 days after contract termination.",
+      "status": "unsupported",
+      "evidence": []
+    }
+  ]
+}
