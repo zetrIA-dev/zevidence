@@ -11,10 +11,11 @@ before changing the system boundary.
 
 ## Current phase
 
-The repository starts with documentation only. Do not pre-generate the full
-FastAPI, React, worker, Docker, Helm, or Terraform implementation. Each
-component is introduced in the study session that defines its contract,
-failure drills, and tests.
+Sessions 1 and 2 have introduced domain contracts plus the FastAPI and
+application boundaries. Do not pre-generate React, worker, persistence,
+retrieval, model, Docker, Helm, or Terraform components. Each component is
+introduced in the study session that defines its contract, failure drills, and
+tests.
 
 ## Non-negotiable boundaries
 
@@ -63,6 +64,28 @@ session:
 
 Mechanical scaffolding is fine after the shared contract exists. Do not hide the
 core lesson behind a generated framework or large abstraction.
+
+## Interview practice mode
+
+When the user asks for interview practice, a mock interview, a scenario drill,
+or voice-based study:
+
+1. Read `docs/interview-practice/README.md` and the requested session file.
+2. Use English for interview questions by default. Give feedback in the
+   language requested by the user.
+3. Ask one question at a time and wait for the answer. Do not reveal the answer
+   before the user responds.
+4. Use at most one follow-up probe before scoring the answer and teaching the
+   missing concept.
+5. Ground the evaluation in the repository's contracts, code, and tests. Do not
+   claim that planned work has already been implemented.
+6. Keep practice read-only unless the user explicitly asks to record results or
+   update study material.
+
+At the end of each completed study session, add or update its file under
+`docs/interview-practice/` using `session-template.md`. Capture the mental model,
+failure modes, interview questions, expected answer elements, and code evidence
+created in that session.
 
 ## Conventions
 

@@ -5,11 +5,14 @@ description = "Source-grounded multi-agent evidence dossier builder"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [
+    "fastapi>=0.115,<1",
     "pydantic>=2.10,<3",
 ]
 
 [dependency-groups]
 dev = [
+    "anyio>=4,<5",
+    "httpx>=0.28,<1",
     "mypy>=1.14,<2",
     "pytest>=8,<9",
     "ruff>=0.9,<1",
@@ -22,6 +25,8 @@ build-backend = "hatchling.build"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+addopts = ["--strict-markers"]
+filterwarnings = ["error"]
 
 [tool.ruff]
 target-version = "py312"
