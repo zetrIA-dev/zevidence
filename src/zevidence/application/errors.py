@@ -21,3 +21,7 @@ class DocumentStateConflict(ApplicationError):
 
 class IdempotencyConflict(ApplicationError):
     code = "idempotency_conflict"
+
+
+class InvalidEventCursor(ApplicationError):
+    code = "invalid_event_cursor"

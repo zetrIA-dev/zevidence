@@ -14,6 +14,7 @@ from zevidence.domain import (
     DocumentStatus,
     Dossier,
     Run,
+    RunEvent,
     transition_document,
 )
 
@@ -93,3 +94,18 @@ class DossierService:
         if run is None:
             raise ResourceNotFound(f"run {run_id} was not found")
         return run
+
+    async def get_run_events(
+        self, run_id: UUID, *, after_sequence: int = 0
+    ) -> tuple[RunEvent, ...]:
+        await self.get_run(run_id)
+        return await self._repository.list_run_events(
+            run_id,
+            after_sequence=after_sequence,
+        )
+
+    async def wait_for_run_events(self, run_id: UUID, *, after_sequence: int) -> None:
+        await self._repository.wait_for_run_events(
+            run_id,
+            after_sequence=after_sequence,
+        )

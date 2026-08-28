@@ -83,6 +83,23 @@ def test_late_duplicate_after_completion_is_safe_and_visible() -> None:
         transition_run(completed, RunStatus.RUNNING)
 
 
+def test_run_retry_returns_to_running_before_completion() -> None:
+    run = Run(
+        dossier_id=uuid4(),
+        document_ids=(uuid4(),),
+        idempotency_key="retry-run",
+    )
+
+    running = transition_run(run, RunStatus.RUNNING)
+    retry_scheduled = transition_run(running, RunStatus.RETRY_SCHEDULED)
+    retried = transition_run(retry_scheduled, RunStatus.RUNNING)
+    completed = transition_run(retried, RunStatus.COMPLETED)
+
+    assert retry_scheduled.status is RunStatus.RETRY_SCHEDULED
+    assert retried.started_at == running.started_at
+    assert completed.status is RunStatus.COMPLETED
+
+
 def test_run_cannot_fail_without_error_details() -> None:
     run = Run(
         dossier_id=uuid4(),

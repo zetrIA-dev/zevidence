@@ -44,10 +44,24 @@ Queue ───────────────► Python worker
 - Dependencies are request-scoped; mutable request state never lives in a
   process global.
 - A run is addressed by `run_id` and protected by an idempotency key.
+- Run creation and its outbox message share one atomic repository boundary, so
+  a queued run cannot lose its publication intent.
 - Queue delivery is at-least-once, so duplicate handling is part of the domain
   contract.
+- Queue messages remain in flight until acknowledged and become visible again
+  after a bounded visibility timeout.
+- Workers claim runs with expiring leases. Each claim increments an attempt
+  token, and stale tokens cannot write terminal state.
+- Retryable errors use bounded exponential backoff. Permanent failures are not
+  retried, and exhausted transient failures enter the DLQ.
 - Run events have a monotonic sequence. SSE clients reconnect with
   `Last-Event-ID`.
+- The SSE stream replays missed events, waits for new events, and terminates
+  after draining the terminal events. Comment heartbeats keep idle streams
+  observable during long processing or retry backoff.
+- The Session 3 publisher and worker are deterministic adapters invoked by the
+  application tests. Long-lived process startup and shutdown wiring is deferred
+  to the runtime sessions.
 - Evidence is immutable. Reprocessing creates a new run and preserves the
   previous provenance.
 

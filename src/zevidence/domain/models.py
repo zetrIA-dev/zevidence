@@ -2,7 +2,7 @@
 
 from datetime import UTC, datetime
 from enum import StrEnum
-from typing import Self
+from typing import Literal, Self
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -33,8 +33,19 @@ class DocumentStatus(StrEnum):
 class RunStatus(StrEnum):
     QUEUED = "queued"
     RUNNING = "running"
+    RETRY_SCHEDULED = "retry_scheduled"
     COMPLETED = "completed"
     FAILED = "failed"
+
+
+class RunEventType(StrEnum):
+    QUEUED = "run_queued"
+    STARTED = "run_started"
+    RECLAIMED = "run_reclaimed"
+    RETRY_SCHEDULED = "retry_scheduled"
+    COMPLETED = "run_completed"
+    FAILED = "run_failed"
+    DEAD_LETTERED = "run_dead_lettered"
 
 
 class ClaimStatus(StrEnum):
@@ -91,6 +102,36 @@ class Run(DomainModel):
             if self.error is not None:
                 raise ValueError("non-failed run cannot record an error")
         return self
+
+
+class JobMessage(DomainModel):
+    id: UUID = Field(default_factory=uuid4)
+    run_id: UUID
+    schema_version: Literal["1.0"] = "1.0"
+    enqueued_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+
+
+class OutboxRecord(DomainModel):
+    id: UUID = Field(default_factory=uuid4)
+    message: JobMessage
+    published_at: datetime | None = None
+
+
+class RunLease(DomainModel):
+    run_id: UUID
+    worker_id: str = Field(min_length=1, max_length=100)
+    attempt: int = Field(ge=1)
+    expires_at: datetime
+
+
+class RunEvent(DomainModel):
+    id: UUID = Field(default_factory=uuid4)
+    run_id: UUID
+    sequence: int = Field(ge=1)
+    event_type: RunEventType
+    occurred_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    attempt: int | None = Field(default=None, ge=1)
+    error_code: str | None = Field(default=None, min_length=1, max_length=100)
 
 
 class SourceLocator(DomainModel):

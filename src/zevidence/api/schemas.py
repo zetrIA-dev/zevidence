@@ -6,7 +6,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, model_validator
 
-from zevidence.domain import DocumentStatus, DossierStatus, RunStatus
+from zevidence.domain import DocumentStatus, DossierStatus, RunEventType, RunStatus
 
 
 class ApiSchema(BaseModel):
@@ -85,6 +85,16 @@ class RunResponse(ApiSchema):
     status: RunStatus
     started_at: datetime | None
     completed_at: datetime | None
+
+
+class RunEventResponse(ApiSchema):
+    id: UUID
+    run_id: UUID
+    sequence: int
+    event_type: RunEventType
+    occurred_at: datetime
+    attempt: int | None
+    error_code: str | None
 
 
 class ErrorDetail(ApiSchema):

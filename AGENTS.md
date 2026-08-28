@@ -11,11 +11,11 @@ before changing the system boundary.
 
 ## Current phase
 
-Sessions 1 and 2 have introduced domain contracts plus the FastAPI and
-application boundaries. Do not pre-generate React, worker, persistence,
-retrieval, model, Docker, Helm, or Terraform components. Each component is
-introduced in the study session that defines its contract, failure drills, and
-tests.
+Sessions 1–3 have introduced domain contracts, FastAPI and application
+boundaries, a deterministic queue and worker, run events, and SSE. Do not
+pre-generate React, durable persistence, retrieval, model, Docker, Helm, or
+Terraform components. Each component is introduced in the study session that
+defines its contract, failure drills, and tests.
 
 ## Non-negotiable boundaries
 

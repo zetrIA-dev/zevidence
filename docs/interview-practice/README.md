@@ -72,7 +72,7 @@ Better answer: <concise interview-ready formulation>
 |---:|---|---|---|
 | 1 | Domain model and traceability | Completed | [Open](session-01-domain-and-traceability.md) |
 | 2 | API boundaries and idempotency | Completed | [Open](session-02-api-boundaries-and-idempotency.md) |
-| 3 | Background jobs, retries, DLQ, state, and SSE | Planned | Add after completion |
+| 3 | Background jobs, retries, DLQ, state, and SSE | Completed | [Open](session-03-background-jobs-retries-and-sse.md) |
 | 4 | React streaming state and frontend tests | Planned | Add after completion |
 | 5–14 | RAG, agents, quality, security, operations, and public case | Planned | See [study plan](../study-plan.md) |
 

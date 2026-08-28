@@ -10,6 +10,7 @@ from zevidence.application import (
     DocumentStateConflict,
     IdempotencyConflict,
     InMemoryRepository,
+    InvalidEventCursor,
     Repository,
     ResourceNotFound,
 )
@@ -20,6 +21,7 @@ ERROR_STATUS: dict[type[ApplicationError], int] = {
     DocumentOwnershipConflict: status.HTTP_409_CONFLICT,
     DocumentStateConflict: status.HTTP_409_CONFLICT,
     IdempotencyConflict: status.HTTP_409_CONFLICT,
+    InvalidEventCursor: status.HTTP_400_BAD_REQUEST,
 }
 
 

@@ -5,13 +5,13 @@ description = "Source-grounded multi-agent evidence dossier builder"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [
+    "anyio>=4,<5",
     "fastapi>=0.115,<1",
     "pydantic>=2.10,<3",
 ]
 
 [dependency-groups]
 dev = [
-    "anyio>=4,<5",
     "httpx>=0.28,<1",
     "mypy>=1.14,<2",
     "pytest>=8,<9",

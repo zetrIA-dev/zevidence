@@ -35,7 +35,10 @@ DOCUMENT_TRANSITIONS: Mapping[DocumentStatus, frozenset[DocumentStatus]] = {
 
 RUN_TRANSITIONS: Mapping[RunStatus, frozenset[RunStatus]] = {
     RunStatus.QUEUED: frozenset({RunStatus.RUNNING, RunStatus.FAILED}),
-    RunStatus.RUNNING: frozenset({RunStatus.COMPLETED, RunStatus.FAILED}),
+    RunStatus.RUNNING: frozenset(
+        {RunStatus.RETRY_SCHEDULED, RunStatus.COMPLETED, RunStatus.FAILED}
+    ),
+    RunStatus.RETRY_SCHEDULED: frozenset({RunStatus.RUNNING, RunStatus.FAILED}),
     RunStatus.COMPLETED: frozenset(),
     RunStatus.FAILED: frozenset(),
 }
@@ -75,7 +78,7 @@ def transition_run(
     timestamp = occurred_at or datetime.now(UTC)
     updates: dict[str, object] = {"status": target}
 
-    if target is RunStatus.RUNNING:
+    if target is RunStatus.RUNNING and run.started_at is None:
         updates["started_at"] = timestamp
     elif target is RunStatus.COMPLETED:
         updates["completed_at"] = timestamp
